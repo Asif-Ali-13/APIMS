@@ -1,0 +1,17 @@
+{
+  "name": "api-hit-monitoring",
+  "version": "1.0.0",
+  "description": "Real time API hit tracking and monitoring system",
+  "main": "src/server.ts",
+  "type": "module",
+  "scripts": {
+    "start": "",
+    "dev": "",
+    "processor": "",
+    "init": "",
+    "init:env": ""
+  },
+  "keywords": ["api", "monitoring", "tracking", "analytics"],
+  "author": "Asif Ali",
+  "license": "MIT"
+}
