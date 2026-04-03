@@ -1,5 +1,5 @@
 import mongoose, { Connection } from "mongoose";
-import config from "./index.ts"
+import config from "./index.ts";
 import logger from "./logger.ts";
 
 /**
