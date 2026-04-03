@@ -1,4 +1,5 @@
-import { Pool, PoolClient, QueryResult, QueryResultRow } from "pg";
+import { Pool } from "pg";
+import type { PoolClient, QueryResult, QueryResultRow } from "pg";
 import config from "./index.ts"
 import logger from "./logger.ts";
 
@@ -62,7 +63,7 @@ class PostgresConnection {
             client = await pool.connect();
             const result = await client.query<{ now: string }>("SELECT NOW()");    // returns time
             
-            logger.info(`Postgres Connection Successful`, { timestamp: result.rows[0].now });
+            logger.info(`Postgres Connection Successful`, { timestamp: result.rows[0]?.now });
         } 
         catch (error: unknown) {
             if(error instanceof Error) logger.error(`Failed to connect to PG. Error: ${ error }`);
