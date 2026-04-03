@@ -1,4 +1,5 @@
-import amqp, { Channel, ChannelModel } from "amqplib";
+import amqp from "amqplib";
+import type { Channel, ChannelModel } from "amqplib";
 import config from "./index.ts";
 import logger from "./logger.ts";
 
