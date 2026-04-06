@@ -44,6 +44,12 @@ const config = {
         maxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || "1000", 10)    // 1000 reqs per 15 mins per IP
     },
 
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        expiresIn: 24 * 60 * 60 * 1000
+    },
+    
 };
 
 export default config;
