@@ -56,6 +56,8 @@ export interface IApiKey extends Document {
   createdBy: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
+
+  isExpired(): boolean;
 }
 
 /**
@@ -144,6 +146,13 @@ apiKeySchema.index({ environment: 1, clientId: 1 });
  * TTL index - auto delete expired keys
  */
 apiKeySchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 })
+
+
+apiKeySchema.methods.isExpired = function (this: IApiKey): boolean {
+    if (!this.expiresAt) return false;
+    return this.expiresAt.getTime() < Date.now();
+};
+
 
 /**
  * Model
