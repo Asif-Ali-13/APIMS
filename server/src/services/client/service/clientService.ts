@@ -42,6 +42,12 @@ import type { IUserRepository } from "../../auth/repository/IUserRepository.ts";
 
 
 type AuthenticatedUser = NonNullable<Express.Request["user"]>;
+type PopulatedClient = IClient & { _id: Types.ObjectId };
+
+export interface ClientByApiKeyResult {
+    client: PopulatedClient;
+    apiKey: IApiKey;
+}
 
 /** Constructor dependencies for {@link ClientService}. */
 export interface ClientServiceDeps {
@@ -279,6 +285,33 @@ export class ClientService {
         } 
         catch (error) {
             logger.error("Error getting client API keys", error);
+            throw error;
+        }
+    }
+
+    /**
+     * Resolves an active, non-expired API key to its owning client.
+     * Used by ingest authentication middleware to attach `req.client` and `req.apiKey`.
+     *
+     * @param apiKey - Raw API key value from request header.
+     * @returns Client + key tuple when valid; otherwise `null`.
+     */
+    async getClientByApiKey(apiKey: string): Promise<ClientByApiKeyResult | null> {
+        try {
+            const key = await this.apiKeyRepository.findByKeyValue(apiKey);
+            
+            if (!key) { return null; }
+            if (key.isExpired()) { return null; }
+
+            const client = key.clientId as unknown as PopulatedClient;
+            if (!client || typeof client !== "object" || !("isActive" in client)) {
+                return null;
+            }
+            
+            return { client, apiKey: key, };
+        } 
+        catch (error) {
+            logger.error('Error finding client by API key:', error);
             throw error;
         }
     }
