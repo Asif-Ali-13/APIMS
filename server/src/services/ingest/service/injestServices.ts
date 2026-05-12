@@ -23,7 +23,7 @@ export interface IngestApiHitInput {
 export interface ApiHitEvent {
     eventId: string;
     timestamp: Date;
-    serverName: string;
+    serviceName: string;
     endpoint: string;
     method: HttpMethod;
     statusCode: number;
@@ -105,7 +105,7 @@ export class IngestService {
             const eventBase = {
                 eventId: uuidv4(),
                 timestamp: new Date(),
-                serverName: hitData.serviceName,
+                serviceName: hitData.serviceName,
                 endpoint: hitData.endpoint,
                 method,
                 statusCode,
