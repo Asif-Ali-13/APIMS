@@ -57,7 +57,6 @@ export class IngestController {
             logger.info('Ingest: Client data received', {
                 clientId: req.client._id,
                 clientName: req.client.name,
-                clientKeys: Object.keys(req.client)
             });
 
             const hitData = {
