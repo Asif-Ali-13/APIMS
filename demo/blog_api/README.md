@@ -11,9 +11,9 @@ This is a demo, not a reference architecture for a blog API. The interesting par
 
 | Piece                                            | Purpose                                               |
 | ------------------------------------------------ | ----------------------------------------------------- |
-| `[src/server.ts](./src/server.ts)`               | Sample REST API (posts + comments)                    |
-| `[src/monitoring.ts](./src/monitoring.ts)`       | Reusable Express middleware - copy into your own apps |
-| `[scripts/load-test.ts](./scripts/load-test.ts)` | Generates sample traffic for dashboards               |
+| [src/server.ts](./src/server.ts)               | Sample REST API (posts + comments)                    |
+| [src/monitoring.ts](./src/monitoring.ts)       | Reusable Express middleware - copy into your own apps |
+| [scripts/load-test.ts](./scripts/load-test.ts) | Generates sample traffic for dashboards               |
 | `.env.sample`                                    | Environment template                                  |
 
 
@@ -26,6 +26,24 @@ This is a demo, not a reference architecture for a blog API. The interesting par
 A client calls one of the blog routes as normal. The route handler does its work and sends a response immediately - the client is never made to wait on monitoring. Once the response has actually been sent (`res.on('finish')`), the monitoring middleware measures the elapsed latency, builds a hit payload (service name, endpoint, method, status code, latency, IP, user agent), and fires it off to the APIMS server's `POST /api/hit` endpoint inside `setImmediate`, so the reporting call never blocks or delays the response that already went out.
 
 If `MONITORING_API_KEY` isn't set, the middleware is a no-op: the blog API works completely normally with monitoring silently disabled, which is what makes `src/monitoring.ts` safe to copy into another service without forcing that service to depend on APIMS being available.
+
+
+
+## Project layout
+
+```text
+demo/blog_api/
+├── src/
+│   ├── server.ts       # Express app + mock posts/comments
+│   ├── monitoring.ts   # Ingest middleware (portable)
+│   └── types.ts        # Post / Comment types
+├── scripts/
+│   └── load-test.ts    # Sample traffic generator
+├── tsconfig.json
+├── package.json
+├── .env.sample
+└── README.md
+```
 
 
 
@@ -92,6 +110,20 @@ Use a **distinct** `serviceName` **per microservice** so analytics can filter by
 
 
 
+
+## Scripts
+scripts used in this project that you may find useful.
+
+| Command             | Description                                                 |
+| ------------------- | ----------------------------------------------------------- |
+| `npm run dev`       | Run with `tsx` watch on `src/server.ts`                     |
+| `npm run build`     | Compile to `dist/`                                          |
+| `npm start`         | Run compiled `dist/server.js`                               |
+| `npm run load-test` | Hit common endpoints 3× (`BLOG_API_URL` overrides base URL) |
+
+
+
+
 ## Running it
 
 Requires an APIMS server already running and an API key issued for this service (see the [server README](../../server/README.md) for onboarding a client and creating a key).
@@ -147,45 +179,14 @@ curl -b cookies.txt \
 
 Super admins may pass `?clientId=<mongoId>` to scope a tenant; omit it for global stats.
 
-The API also accepts `Authorization: Bearer <token>` if you extract the JWT yourself, but the default auth flow uses the `authToken` cookie. See `[server/README.md](../../server/README.md)` for full API documentation.
+The API also accepts `Authorization: Bearer <token>` if you extract the JWT yourself, but the default auth flow uses the `authToken` cookie. See [server/README.md](../../server/README.md) for full API documentation.
 
 Filter by `serviceName: blog-api` in the response to see only this demo’s traffic.
 
 
 
-## Project layout
-
-```text
-demo/blog_api/
-├── src/
-│   ├── server.ts       # Express app + mock posts/comments
-│   ├── monitoring.ts   # Ingest middleware (portable)
-│   └── types.ts        # Post / Comment types
-├── scripts/
-│   └── load-test.ts    # Sample traffic generator
-├── tsconfig.json
-├── package.json
-├── .env.sample
-└── README.md
-```
-
-
-
-## Scripts
-
-
-| Command             | Description                                                 |
-| ------------------- | ----------------------------------------------------------- |
-| `npm run dev`       | Run with `tsx` watch on `src/server.ts`                     |
-| `npm run build`     | Compile to `dist/`                                          |
-| `npm start`         | Run compiled `dist/server.js`                               |
-| `npm run load-test` | Hit common endpoints 3× (`BLOG_API_URL` overrides base URL) |
-
-
-
-
 ## Troubleshooting
-
+Some Common Issues that may occur and where to look to resolve them. 
 
 | Symptom                                        | Check                                                                                                                      |
 | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
