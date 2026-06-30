@@ -21,7 +21,7 @@ This is a demo, not a reference architecture for a blog API. The interesting par
 
 ## Data flow
 
-Blog-API-monitoring-data-flow
+![Blog-API-monitoring-data-flow](./public/blog-api-dataflow.svg)
 
 A client calls one of the blog routes as normal. The route handler does its work and sends a response immediately - the client is never made to wait on monitoring. Once the response has actually been sent (`res.on('finish')`), the monitoring middleware measures the elapsed latency, builds a hit payload (service name, endpoint, method, status code, latency, IP, user agent), and fires it off to the APIMS server's `POST /api/hit` endpoint inside `setImmediate`, so the reporting call never blocks or delays the response that already went out.
 
