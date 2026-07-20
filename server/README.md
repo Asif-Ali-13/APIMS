@@ -113,11 +113,11 @@ All endpoints are prefixed with `/api`. Authenticated routes expect a JWT, set v
 | Description | Documentation Link      |
 | ------ | --------- | 
 |`Complete Api Documentation`|[POSTMAN-API-DOCUMENTATION](https://documenter.getpostman.com/view/39489029/2sBXwyHnjR)| 
-|`AUTH`|[AUTH-README](./src/services/auth/auth-readme.md)|
-|`CLIENT`|[CLIENT-README](./src/services/client/client-readme.md)|
-|`INJEST`|[INJEST-README](./src/services/ingest/ingest-readme.md)|
-|`ANALYTICS`|[ANALYTICS-README](./src/services/analytics/analytics-readme.md)| 
-|`PROCESSOR`|[PROCESSOR-README](./src/services/processor/processor-readme.md)|
+|`AUTH`|[AUTH-README](./src/services/auth/README.md)|
+|`CLIENT`|[CLIENT-README](./src/services/client/README.md)|
+|`INJEST`|[INJEST-README](./src/services/ingest/README.md)|
+|`ANALYTICS`|[ANALYTICS-README](./src/services/analytics/README.md)| 
+|`PROCESSOR`|[PROCESSOR-README](./src/services/processor/README.md)|
 
 
 
