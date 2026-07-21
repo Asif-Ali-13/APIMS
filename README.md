@@ -9,8 +9,8 @@ This repository contains two independent applications:
 
 | Folder                              | What it is                                                                                                                                                                                      | README                                                 |
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `[server/](./server)`               | The monitoring platform itself - ingestion API, RabbitMQ pipeline, consumer worker, auth, and analytics                                                                                         | `[server/README.md](./server/README.md)`               |
-| `[demo/blog_api/](./demo/blog_api)` | A small sample Express service that reports its own traffic to APIMS, used to generate realistic demo data. Demonstrate how to configure and integrate your application with the APIMS service. | `[demo/blog_api/README.md](./demo/blog_api/README.md)` |
+|[server/](./server)| The monitoring platform itself - ingestion API, RabbitMQ pipeline, consumer worker, auth, and analytics|[server/README.md](./server/README.md)|
+|[demo/blog_api/](./demo/blog_api)| A small sample Express service that reports its own traffic to APIMS, used to generate realistic demo data. Demonstrate how to configure and integrate your application with the APIMS service. |[demo/blog_api/README.md](./demo/blog_api/README.md)|
 
 
 
